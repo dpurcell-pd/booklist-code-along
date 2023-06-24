@@ -85,6 +85,7 @@ class UI {
 // Store Class: Handles Storage
 
 class Store {
+    // read books from local storage
     static getBooks() {
         let books;
         if (localStorage.getItem('books') === null) {
@@ -94,14 +95,14 @@ class Store {
         }
         return books;
     }
-
+    // add books to local storage
     static addBook(book) {
         const BOOKS = Store.getBooks();
         BOOKS.push(book);
         localStorage.setItem('books', JSON.stringify(BOOKS));
 
     }
-
+    // remove books from local storage
     static removeBook(isbn) {
         const BOOKS = Store.getBooks();
         BOOKS.forEach((book, index) => {
@@ -109,6 +110,7 @@ class Store {
                 BOOKS.splice(index, 1);
             }
         });
+        localStorage.setItem('books', JSON.stringify(BOOKS));
     }
 }
 
@@ -158,7 +160,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
     UI.deleteBook(e.target);
 
     // remove book from local storage by targeting the isbn of the event target sibling
-    Store.removeBook(e.target.parentElement.previousElementSibling.textContent)
+    Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 
     UI.showAlert('Book Removed Successfully.', 'success');
 });
